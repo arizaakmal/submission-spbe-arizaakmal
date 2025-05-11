@@ -7,6 +7,9 @@ async function main() {
   await prisma.book.deleteMany();
   await prisma.author.deleteMany();
   await prisma.warehouse.deleteMany();
+  await prisma.cart.deleteMany();
+  await prisma.customer.deleteMany();
+  await prisma.cartItem.deleteMany();
 
   // Seed Authors
   const author1 = await prisma.author.create({
@@ -47,33 +50,73 @@ async function main() {
   });
 
   // Seed Warehouse
-    const warehouse = await prisma.warehouse.create({
-      data: { 
-        name: 'Gudang Jakarta',
-        location: 'Jakarta',
-        capacity: 1000,
-     }
-    });
+  const warehouse = await prisma.warehouse.create({
+    data: {
+      name: "Gudang Jakarta",
+      location: "Jakarta",
+      capacity: 1000,
+    },
+  });
 
   // Seed Book Products
-    await prisma.bookProduct.createMany({
-      data: [
-        {
-          format: 'hardcover',
-          price: 350000,
-          stock: 12,
-          warehouseId: warehouse.id,
-          bookId: book1.id
-        },
-        {
-          format: 'paperback',
-          price: 150000,
-          stock: 20,
-          warehouseId: warehouse.id,
-          bookId: book2.id
-        }
-      ]
-    });
+  await prisma.bookProduct.createMany({
+    data: [
+      {
+        format: "hardcover",
+        price: 350000,
+        stock: 12,
+        warehouseId: warehouse.id,
+        bookId: book1.id,
+      },
+      {
+        format: "paperback",
+        price: 150000,
+        stock: 20,
+        warehouseId: warehouse.id,
+        bookId: book2.id,
+      },
+    ],
+  });
+
+  // Seed Customer
+  const customer1 = await prisma.customer.create({
+    data: {
+      name: "John Doe",
+      email: "john.doe@example.com",
+      password: "password123",
+      address: "123 Main St",
+      phone: "081234567890",
+    },
+  });
+
+  //Seed Cart
+  await prisma.cart.create({
+    data: {
+      customerId: customer1.id,
+      createdAt: new Date(),
+    },
+  });
+
+  //Seed Cart Items
+  const cart = await prisma.cart.findFirst();
+
+  const bookProduct1 = await prisma.bookProduct.findFirst();
+  const bookProduct2 = await prisma.bookProduct.findFirst({ skip: 1 });
+
+ await prisma.cartItem.createMany({
+  data: [
+    {
+      cartId: cart.id, 
+      booksProductId: bookProduct1.id,
+      quantity: 2,
+    },
+    {
+      cartId: cart.id,
+      booksProductId: bookProduct2.id,
+      quantity: 1,
+    },
+  ],
+});
 }
 
 main()
