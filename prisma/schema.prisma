@@ -62,9 +62,9 @@ model Warehouse {
 model Cart {
   id         String         @id @default(uuid())
   customer   Customer       @relation(fields: [customerId], references: [id])
-  customerId String         @unique
-  createdAt  DateTime       @default(now())
-  cartItems  CartItem[]
+  customerId String         @unique @map("customer_id")
+  createdAt  DateTime       @default(now()) @map("created_at")
+  items      CartItem[]
   invoices   Invoice[]
 }
 
@@ -72,10 +72,10 @@ model CartItem {
   id              String     @id @default(uuid())
   cart            Cart       @relation(fields: [cartId], references: [id])
   cartId          String
-  booksProductId  String
-  booksProduct    BookProduct @relation(fields: [booksProductId], references: [id])
+  booksProductId  String     @map("books_product_id")
+  product    BookProduct @relation(fields: [booksProductId], references: [id])
   quantity        Int
-  createdAt       DateTime    @default(now())
+  createdAt       DateTime    @default(now()) @map("created_at")
 }
 
 model Invoice {
