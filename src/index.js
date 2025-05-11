@@ -2,11 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
 import booksRoutes from "./routes/books.js";
+import cartRoutes from "./routes/cart.js";
 import { PrismaClient } from "@prisma/client";
+import { withAccelerate } from '@prisma/extension-accelerate'
 
 dotenv.config();
 const app = express();
-const prisma = new PrismaClient();
+const prisma = new PrismaClient().$extends(withAccelerate())
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,6 +19,7 @@ app.listen(PORT, () => console.log(`Server running on ${URL}:${PORT}`));
 
 app.use("/auth", authRoutes);
 app.use("/books", booksRoutes);
+app.use("/cart", cartRoutes);
 
 app.get("/", (req, res) => {
   res.send("Online Bookstore");

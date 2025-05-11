@@ -33,8 +33,8 @@ model Book {
   isbn             String         @unique
   publication_year Int
   genre            String
-  authorId         String
-  author           Author         @relation(fields: [authorId], references: [id])
+  author_id        String
+  author           Author         @relation(fields: [author_id], references: [id], onDelete: Cascade)
   products         BookProduct[]
 }
 
@@ -43,12 +43,12 @@ model BookProduct {
   format     String
   price      Decimal
   stock      Int
-  warehouseId String
-  warehouse  Warehouse  @relation(fields: [warehouseId], references: [id])
-  bookId     String
-  book       Book       @relation(fields: [bookId], references: [id])
+  warehouse_id String
+  warehouse  Warehouse  @relation(fields: [warehouse_id], references: [id], onDelete: Cascade)
+  book_id    String
+  book       Book       @relation(fields: [book_id], references: [id], onDelete: Cascade)
   items      InvoiceItem[]
-  cartItems  CartItem[]
+  cart_items  CartItem[]
 }
 
 model Warehouse {
@@ -61,41 +61,41 @@ model Warehouse {
 
 model Cart {
   id         String         @id @default(uuid())
-  customer   Customer       @relation(fields: [customerId], references: [id])
-  customerId String         @unique @map("customer_id")
-  createdAt  DateTime       @default(now()) @map("created_at")
+  customer   Customer       @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  customer_id String         @unique 
+  created_at  DateTime       @default(now()) 
   items      CartItem[]
   invoices   Invoice[]
 }
 
 model CartItem {
   id              String     @id @default(uuid())
-  cart            Cart       @relation(fields: [cartId], references: [id])
-  cartId          String
-  booksProductId  String     @map("books_product_id")
-  product    BookProduct @relation(fields: [booksProductId], references: [id])
+  cart            Cart       @relation(fields: [cart_id], references: [id], onDelete: Cascade)
+  cart_id          String
+  books_product_id  String    
+  product    BookProduct @relation(fields: [books_product_id], references: [id], onDelete: Cascade)
   quantity        Int
-  createdAt       DateTime    @default(now()) @map("created_at")
+  created_at       DateTime    @default(now()) 
 }
 
 model Invoice {
   id         String   @id @default(uuid())
-  cart       Cart     @relation(fields: [cartId], references: [id])
-  cartId     String
-  totalAmount Decimal
+  cart       Cart     @relation(fields: [cart_id], references: [id], onDelete: Cascade)
+  cart_id     String
+  total_amount Decimal
   status     String
-  issuedAt   DateTime @default(now())
-  customer   Customer @relation(fields: [customerId], references: [id])
-  customerId String
+  issued_at   DateTime @default(now())
+  customer   Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  customer_id String
   items      InvoiceItem[]
 }
 
 model InvoiceItem {
   id         String   @id @default(uuid())
-  invoice    Invoice  @relation(fields: [invoiceId], references: [id])
-  invoiceId  String
-  bookProduct BookProduct @relation(fields: [bookProductId], references: [id])
-  bookProductId String
+  invoice    Invoice  @relation(fields: [invoice_id], references: [id], onDelete: Cascade)
+  invoice_id  String
+  book_product BookProduct @relation(fields: [book_product_id], references: [id], onDelete: Cascade)
+  book_product_id String
   quantity   Int
   price      Decimal
 }

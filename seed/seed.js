@@ -35,7 +35,7 @@ async function main() {
       isbn: "9780132350884",
       publication_year: 2008,
       genre: "Programming",
-      authorId: author1.id,
+      author_id: author1.id,
     },
   });
 
@@ -45,7 +45,7 @@ async function main() {
       isbn: "9780553593716",
       publication_year: 1996,
       genre: "Fantasy",
-      authorId: author2.id,
+      author_id: author2.id,
     },
   });
 
@@ -65,15 +65,15 @@ async function main() {
         format: "hardcover",
         price: 350000,
         stock: 12,
-        warehouseId: warehouse.id,
-        bookId: book1.id,
+        warehouse_id: warehouse.id,
+        book_id: book1.id,
       },
       {
         format: "paperback",
         price: 150000,
         stock: 20,
-        warehouseId: warehouse.id,
-        bookId: book2.id,
+        warehouse_id: warehouse.id,
+        book_id: book2.id,
       },
     ],
   });
@@ -92,8 +92,8 @@ async function main() {
   //Seed Cart
   await prisma.cart.create({
     data: {
-      customerId: customer1.id,
-      createdAt: new Date(),
+      customer_id: customer1.id,
+      created_at: new Date(),
     },
   });
 
@@ -106,13 +106,13 @@ async function main() {
  await prisma.cartItem.createMany({
   data: [
     {
-      cartId: cart.id, 
-      booksProductId: bookProduct1.id,
+      cart_id: cart.id, 
+      books_product_id: bookProduct1.id,
       quantity: 2,
     },
     {
-      cartId: cart.id,
-      booksProductId: bookProduct2.id,
+      cart_id: cart.id,
+      books_product_id: bookProduct2.id,
       quantity: 1,
     },
   ],
