@@ -13,14 +13,14 @@ This application is an online bookstore API built with Node.js, PostgreSQL, and 
 1. **Clone the Repository**:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/arizaakmal/submission-spbe-arizaakmal.git
    cd submission-spbe-arizaakmal
    ```
 
 2. **Build and Run the Application**: Run the following command to build and start the application using Docker Compose:
 
    ```bash
-   docker-compose up --build
+   docker compose up --build
    ```
 
 3. **Access the Application**:
