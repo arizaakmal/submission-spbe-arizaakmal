@@ -35,5 +35,4 @@ Complete API documentation is available at the following link: <a href="https://
 
 ## Notes
 
-- Ensure the `.env` file is properly configured before running the application.
-- Use `docker-compose down` to stop all containers after you are done using the application.
+- Use `docker compose down` to stop all containers after you are done using the application.
