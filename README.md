@@ -7,6 +7,7 @@ This application is an online bookstore API built with Node.js, PostgreSQL, and 
 ### Prerequisites
 
 - Ensure you have [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) installed.
+- **Make sure Docker Desktop or Docker Engine is running** on your system before executing the commands below.
 
 ### Steps
 
